@@ -1,4 +1,4 @@
-package ics.mgs.service.database.siteUser;
+package ics.mgs.service.database.site_user;
 
 import ics.mgs.config.web.QueryDslConfig;
 import ics.mgs.config.web.ServiceConfig;
