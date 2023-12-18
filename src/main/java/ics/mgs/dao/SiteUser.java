@@ -45,7 +45,19 @@ public class SiteUser {
         this.name = name;
     }
 
+    public void addBell(Bell bell) {
+        this.bells.add(bell);
+        bell.setUser(this);
+    }
+
+    public void addBells(Set<Bell> bells) {
+        for (Bell bell : bells) {
+            addBell(bell);
+        }
+    }
+
     public void removeBell(Bell bell) {
         this.bells.remove(bell);
+        bell.setUser(null);
     }
 }
