@@ -36,21 +36,18 @@ class RepositoryTest {
     @Test
     void should_saveUserOrBells_when_inputUserOrBells() {
         // given
-        SiteUser user = SiteUser.builder().userId("testUserId")
+        SiteUser user = userRepository.save(SiteUser.builder().userId("testUserId")
                 .name("testUserName")
                 .password("testPassword")
                 .email("testEmail@gmail.com")
-                .build();
-        userRepository.save(user);
+                .build());
 
         Set<Bell> bells = new LinkedHashSet<>();
         for (int i = 0; i < 5; i++) {
-            bells.add(Bell.builder().user(user).url("test" + i + ".com").fileName("testName" + i).build());
+            bells.add(Bell.builder().url("test" + i + ".com").fileName("testName" + i).build());
         }
+        user.addBells(bells);
         bellRepository.saveAll(bells);
-
-        em.flush();
-        em.clear();
 
         // when
         Optional<SiteUser> predictedUser = userRepository.findSiteUserByUserId("testUserId");
