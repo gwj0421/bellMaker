@@ -22,11 +22,11 @@ public class Bell {
 
     private String fileName;
 
+    @Column(length = 2083)
     private String url;
 
     @Builder
-    public Bell(SiteUser user, String fileName, String url) {
-        this.user = user;
+    public Bell(String fileName, String url) {
         this.fileName = fileName;
         this.url = url;
     }
@@ -37,15 +37,5 @@ public class Bell {
 
     public void setUser(SiteUser user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Bell{" +
-                "id=" + id +
-                ", user=" + user +
-                ", fileName='" + fileName + '\'' +
-                ", url='" + url + '\'' +
-                '}';
     }
 }
