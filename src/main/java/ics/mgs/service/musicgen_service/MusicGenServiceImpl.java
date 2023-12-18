@@ -13,13 +13,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MusicGenServiceImpl implements MusicGenService{
-    private WebClient webClient = WebClient.create();
+public class MusicGenServiceImpl implements MusicGenService {
+    private final WebClient webClient;
 
-    public FileResponse sendClueToModelServer(String userId,InputForm inputForm) {
+    public FileResponse sendClueToModelServer(String userId, InputForm inputForm) {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("user_id", userId);
-        builder.part("texts", String.join("|",inputForm.getTexts()));
+        builder.part("texts", String.join("|", inputForm.getTexts()));
         builder.part("token_cnt", String.valueOf(inputForm.getTokenCnt()));
 
         return webClient.post()
@@ -30,5 +30,4 @@ public class MusicGenServiceImpl implements MusicGenService{
                 .bodyToMono(FileResponse.class)
                 .block();
     }
-
 }
