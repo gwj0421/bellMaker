@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/music_form.css" rel="stylesheet"/>
+    <title>Music Maker</title>
+</head>
+<body>
+<h1>User Music</h1>
+
+<table class="music-table">
+    <thead>
+    <tr>
+        <th>Idx</th>
+        <th>Audio Name</th>
+        <th>Audio</th>
+        <th>Download</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="content,status : ${userContent}" class="music-item">
+        <td th:text="${status.count}"></td>
+        <td th:text="${content.getFileName()}"></td>
+        <td>
+            <audio controls>
+                <source th:src="${content.getUrl()}" type="audio/wav">
+            </audio>
+        </td>
+        <td><a th:href="${content.getUrl()}">다운로드</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
