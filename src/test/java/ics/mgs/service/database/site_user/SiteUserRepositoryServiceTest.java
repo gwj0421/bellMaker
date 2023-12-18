@@ -7,7 +7,6 @@ import ics.mgs.dao.SiteUser;
 import ics.mgs.error.UserNotFound;
 import ics.mgs.repository.BellRepository;
 import ics.mgs.repository.SiteUserRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ class SiteUserRepositoryServiceTest {
     private final SiteUserRepository userRepository;
     private final BellRepository bellRepository;
     private final SiteUserRepositoryService userRepositoryService;
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     public SiteUserRepositoryServiceTest(SiteUserRepository userRepository, BellRepository bellRepository, SiteUserRepositoryService userRepositoryService) {
@@ -66,20 +63,20 @@ class SiteUserRepositoryServiceTest {
     void findUsersWithFetchJoin() {
         // given
         for (int i = 0; i < 5; i++) {
-            SiteUser user = SiteUser.builder().userId("testUserId" + i)
+            SiteUser user = userRepository.save(SiteUser.builder().userId("testUserId" + i)
                     .name("testUserName" + i)
                     .password("testPassword" + i)
                     .email("testEmail" + i + "@gmail.com")
-                    .build();
-            userRepository.save(user);
+                    .build());
             for (int j = 0; j < 3; j++) {
-                Bell bell = Bell.builder().user(user).url("test" + j + ".com").fileName("testName" + j).build();
+                Bell bell = Bell.builder().url("test" + j + ".com").fileName("testName" + j).build();
+                user.addBell(bell);
                 bellRepository.save(bell);
             }
         }
 
-        em.flush();
-        em.clear();
+//        em.flush();
+//        em.clear();
 
 //        List<SiteUser> everyUsers = userRepository.findAll();
         List<SiteUser> everyUsers = userRepositoryService.findUsersWithFetchJoin();
