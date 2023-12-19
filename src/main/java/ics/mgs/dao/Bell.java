@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "BELL_TB")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,10 +27,17 @@ public class Bell {
     @Column(length = 2083)
     private String url;
 
+    private LocalDateTime expiresIn;
+
     @Builder
-    public Bell(String fileName, String url) {
+    public Bell(String fileName, String url, LocalDateTime expiresIn) {
         this.fileName = fileName;
         this.url = url;
+        this.expiresIn = expiresIn;
+    }
+
+    public final boolean isExpired() {
+        return LocalDateTime.now().isAfter(expiresIn);
     }
 
     public void setFileName(String fileName) {
