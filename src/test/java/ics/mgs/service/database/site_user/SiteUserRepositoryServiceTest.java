@@ -2,6 +2,7 @@ package ics.mgs.service.database.site_user;
 
 import ics.mgs.config.web.QueryDslConfig;
 import ics.mgs.config.web.ServiceConfig;
+import ics.mgs.config.web.WebClientConfig;
 import ics.mgs.dao.Bell;
 import ics.mgs.dao.SiteUser;
 import ics.mgs.error.UserNotFound;
@@ -20,7 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Import({ServiceConfig.class, QueryDslConfig.class})
+@Import({ServiceConfig.class, QueryDslConfig.class, WebClientConfig.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SiteUserRepositoryServiceTest {
@@ -74,9 +75,6 @@ class SiteUserRepositoryServiceTest {
                 bellRepository.save(bell);
             }
         }
-
-//        em.flush();
-//        em.clear();
 
 //        List<SiteUser> everyUsers = userRepository.findAll();
         List<SiteUser> everyUsers = userRepositoryService.findUsersWithFetchJoin();
