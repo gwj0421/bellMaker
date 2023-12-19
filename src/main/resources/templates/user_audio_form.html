@@ -24,11 +24,15 @@
         <td th:text="${status.count}"></td>
         <td th:text="${content.getFileName()}"></td>
         <td>
-            <audio controls>
+            <audio controls th:if="${content.isExpired()}">
                 <source th:src="${content.getUrl()}" type="audio/wav">
             </audio>
+            <p th:else>Is Expired</p>
         </td>
-        <td><a th:href="${content.getUrl()}">다운로드</a></td>
+        <td>
+            <a th:href="${content.getUrl()}" th:if="${content.isExpired()}">다운로드</a>
+            <p th:else>Is Expired</p>
+        </td>
     </tr>
     </tbody>
 </table>
