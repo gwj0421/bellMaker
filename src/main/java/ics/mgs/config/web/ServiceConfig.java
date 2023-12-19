@@ -25,12 +25,12 @@ public class ServiceConfig {
 
     @Bean
     public SiteUserRepositoryService userRepositoryService() {
-        return new SiteUserRepositoryServiceImpl(userRepository,queryFactory);
+        return new SiteUserRepositoryServiceImpl(userRepository, queryFactory);
     }
 
     @Bean
     public BellRepositoryService bellRepositoryService() {
-        return new BellRepositoryServiceImpl(userRepository, bellRepository);
+        return new BellRepositoryServiceImpl(userRepository, bellRepository, queryFactory);
     }
 
     @Bean
