@@ -23,16 +23,11 @@ public class MusicGenController {
     private final BellRepositoryService bellRepositoryService;
 
     @PostMapping("/sendInfoToModel/{userId}")
-    public String sendToModel(@ModelAttribute InputForm inputForm, @PathVariable String userId, Model model) {
+    public String sendToModel(@ModelAttribute InputForm inputForm, @PathVariable String userId) {
         FileResponse response = musicGenService.sendClueToModelServer(userId, inputForm);
 
         bellRepositoryService.saveBellToUser(userId, response);
 
-        if (response.getStatus().equals("OK")) {
-            model.addAttribute("response", response);
-        } else {
-            model.addAttribute("response", FileResponse.makeEmptyResponse());
-        }
         return "redirect:/showMusic/" + userId;
     }
 
